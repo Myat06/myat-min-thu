@@ -1,0 +1,114 @@
+.resume-page {
+  min-height: 100vh;
+  padding: 100px 64px 80px;
+  background: #0b080c;
+  box-sizing: border-box;
+}
+
+/* ── Hero ── */
+.resume-hero {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 0 72px;
+}
+
+.resume-hero-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #c2a4ff;
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  border: 1px solid rgba(194, 164, 255, 0.25);
+  border-radius: 8px;
+  background: rgba(194, 164, 255, 0.06);
+}
+
+.resume-hero h1 {
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 20px;
+}
+
+.resume-hero h1 span {
+  color: #c2a4ff;
+}
+
+.resume-hero p {
+  font-size: 17px;
+  color: rgba(234, 229, 236, 0.5);
+  max-width: 500px;
+  line-height: 1.6;
+  margin: 0 0 32px;
+}
+
+.resume-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.resume-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c2a4ff;
+  border: 1px solid rgba(194, 164, 255, 0.3);
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+}
+
+.resume-hero-cta:hover {
+  background: rgba(194, 164, 255, 0.1);
+  color: #c2a4ff;
+  border-color: rgba(194, 164, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Filled primary variant for Download CV */
+.resume-hero-cta--primary {
+  background: #c2a4ff;
+  color: #0b080c;
+  border-color: transparent;
+}
+
+.resume-hero-cta--primary:hover {
+  background: #d4bcff;
+  color: #0b080c;
+  border-color: transparent;
+  transform: translateY(-1px);
+}
+
+/* ── Divider ── */
+.resume-divider {
+  max-width: 1100px;
+  margin: 0 auto 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(194, 164, 255, 0.2), transparent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .resume-page {
+    padding: 80px 20px 100px;
+  }
+  .resume-hero {
+    padding: 40px 0 56px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .resume-page {
+    padding: 90px 40px 80px;
+  }
+}

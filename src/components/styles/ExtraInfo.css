@@ -1,0 +1,162 @@
+/* ── ExtraInfo Section ── */
+
+.extrainfo-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 0 120px;
+  box-sizing: border-box;
+}
+
+/* Heading */
+.extrainfo-heading {
+  margin-bottom: 48px;
+}
+
+.extrainfo-section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #c2a4ff;
+  margin-bottom: 16px;
+}
+
+.extrainfo-heading h2 {
+  font-size: clamp(40px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0;
+}
+
+.extrainfo-heading h2 span {
+  color: #c2a4ff;
+}
+
+/* ── Card grid ── */
+.extrainfo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Make career goal span full width */
+.extrainfo-grid .extrainfo-card:first-child {
+  grid-column: 1 / -1;
+}
+
+/* ── Individual card ── */
+.extrainfo-card {
+  background: rgba(15, 12, 18, 0.5);
+  border: 1px solid rgba(45, 35, 55, 0.45);
+  border-radius: 16px;
+  padding: 28px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.extrainfo-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(194, 164, 255, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.extrainfo-card:hover {
+  border-color: rgba(194, 164, 255, 0.3);
+  box-shadow: 0 12px 32px rgba(194, 164, 255, 0.05);
+}
+
+.extrainfo-card:hover::before {
+  opacity: 1;
+}
+
+/* Card header */
+.extrainfo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.extrainfo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: rgba(194, 164, 255, 0.1);
+  border: 1px solid rgba(194, 164, 255, 0.2);
+  color: #c2a4ff;
+  flex-shrink: 0;
+}
+
+.extrainfo-card-header h3 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(234, 229, 236, 0.55);
+  margin: 0;
+}
+
+/* Card body */
+.extrainfo-body p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(234, 229, 236, 0.75);
+  margin: 0;
+}
+
+.extrainfo-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.extrainfo-body li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(234, 229, 236, 0.7);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.extrainfo-body li::before {
+  content: '';
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c2a4ff;
+  margin-top: 7px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .extrainfo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .extrainfo-grid .extrainfo-card:first-child {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .extrainfo-section {
+    padding-bottom: 80px;
+  }
+}

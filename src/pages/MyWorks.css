@@ -1,0 +1,312 @@
+/* ── MyWorks Page ── */
+
+.myworks-page {
+  position: relative;
+  min-height: 100vh;
+  background: #0b080c;
+  color: #eae5ec;
+  padding: 100px 64px 80px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Background glows */
+.myworks-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.myworks-glow-top {
+  top: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(194,164,255,0.08) 0%, transparent 70%);
+}
+.myworks-glow-bottom {
+  bottom: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(194,164,255,0.05) 0%, transparent 70%);
+}
+
+/* Header */
+.myworks-header-wrap {
+  max-width: 1100px;
+  margin: 0 auto 56px;
+  position: relative;
+  z-index: 10;
+}
+
+.myworks-title {
+  font-size: clamp(40px, 7vw, 72px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+}
+.myworks-title span {
+  color: #c2a4ff;
+}
+
+.myworks-subtitle {
+  font-size: 16px;
+  color: rgba(234,229,236,0.55);
+  max-width: 560px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Tabs container */
+.myworks-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+/* Tab bar */
+.tabs-bar {
+  border-bottom: 1px solid rgba(45,35,55,0.45);
+  padding-bottom: 16px;
+  margin-bottom: 40px;
+}
+
+.tabs-list {
+  display: inline-flex;
+  background: rgba(30,25,35,0.4);
+  border: 1px solid rgba(45,35,55,0.4);
+  border-radius: 12px;
+  padding: 6px;
+  gap: 2px;
+}
+
+.tab-trigger {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(234,229,236,0.6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.tab-trigger:hover {
+  color: #eae5ec;
+}
+.tab-trigger[data-state="active"] {
+  background: #c2a4ff;
+  color: #0b080c;
+  box-shadow: 0 4px 16px rgba(194,164,255,0.25);
+}
+
+.tab-count {
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 20px;
+  text-align: center;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(194,164,255,0.12);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.tab-trigger[data-state="active"] .tab-count {
+  background: rgba(11,8,12,0.18);
+  border-color: rgba(11,8,12,0.12);
+}
+
+.tab-content {
+  outline: none;
+}
+
+/* Tab entrance animation */
+[data-state="active"] {
+  animation: slideUp 0.28s ease forwards;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 80px 24px;
+  border: 1px dashed rgba(45,35,55,0.5);
+  border-radius: 16px;
+  background: rgba(30,25,35,0.1);
+}
+.empty-state p {
+  color: rgba(234,229,236,0.4);
+  font-size: 15px;
+}
+
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── Project card ── */
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px;
+  background: rgba(15,12,18,0.55);
+  border: 1px solid rgba(45,35,55,0.45);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.45s ease,
+              box-shadow 0.45s ease;
+}
+
+/* Shimmer accent line on hover */
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(194,164,255,0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(194,164,255,0.38);
+  box-shadow: 0 24px 48px rgba(194,164,255,0.07);
+}
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Watermark project number */
+.project-num {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 76px;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(194,164,255,0.07);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -2px;
+}
+
+/* Card top row */
+.project-card-top {
+  display: flex;
+  align-items: center;
+}
+
+.project-cat-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 6px;
+  background: rgba(194,164,255,0.1);
+  border: 1px solid rgba(194,164,255,0.22);
+  color: #c2a4ff;
+}
+
+/* Title */
+.project-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+.project-card:hover .project-title {
+  color: #c2a4ff;
+}
+
+/* Description */
+.project-desc {
+  font-size: 14px;
+  color: rgba(234,229,236,0.58);
+  line-height: 1.7;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Tech badges */
+.project-techs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.project-tech {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(30,25,35,0.7);
+  border: 1px solid rgba(45,35,55,0.4);
+  color: rgba(234,229,236,0.55);
+}
+
+/* GitHub button */
+.project-github-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(234,229,236,0.8);
+  background: rgba(30,25,35,0.7);
+  border: 1px solid rgba(45,35,55,0.6);
+  padding: 11px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 4px;
+}
+.project-github-btn:hover {
+  background: #c2a4ff;
+  border-color: transparent;
+  color: #0b080c;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .myworks-page {
+    padding: 80px 20px 100px;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-num {
+    font-size: 56px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .myworks-page {
+    padding: 90px 40px 80px;
+  }
+}

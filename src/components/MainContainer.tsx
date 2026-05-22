@@ -1,0 +1,49 @@
+import { PropsWithChildren, useEffect, useState } from "react";
+import About from "./About";
+import ChatBot from "./ChatBot";
+import Cursor from "./Cursor";
+import Footer from "./Footer";
+import Landing from "./Landing";
+import Navbar from "./Navbar";
+import SocialIcons from "./SocialIcons";
+import WhatIDo from "./WhatIDo";
+import TechStackNew from "./TechStackNew";
+import setSplitText from "./utils/splitText";
+
+const MainContainer = ({ children }: PropsWithChildren) => {
+  const [isDesktopView, setIsDesktopView] = useState<boolean>(
+    window.innerWidth > 1024
+  );
+  const [isMobile] = useState<boolean>(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const resizeHandler = () => {
+      setSplitText();
+      setIsDesktopView(window.innerWidth > 1024);
+    };
+    resizeHandler();
+    window.addEventListener("resize", resizeHandler);
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, [isDesktopView]);
+
+  return (
+    <div className="container-main">
+      <Cursor />
+      <Navbar />
+      <SocialIcons />
+      <ChatBot />
+      {isDesktopView && !isMobile && children}
+      <div className="container-main">
+        <Landing />
+        <About />
+        <WhatIDo />
+        <TechStackNew />
+        <Footer />
+      </div>
+    </div>
+  );
+};
+
+export default MainContainer;
