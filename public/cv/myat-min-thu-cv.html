@@ -187,7 +187,7 @@
       padding: 36px 32px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 22px;
     }
 
     .main-header { border-bottom: 2px solid var(--accent); padding-bottom: 14px; }
@@ -230,6 +230,7 @@
     .entry { display: flex; flex-direction: column; gap: 3px; }
     .entry-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
     .entry-title { font-size: 13px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .entry-sub { font-size: 11.5px; font-weight: 600; color: var(--accent); font-style: italic; }
     .entry-company { font-size: 12px; font-weight: 600; color: var(--accent); }
     .entry-meta {
       display: flex;
@@ -242,6 +243,14 @@
     }
     .entry-meta span + span::before { content: '·'; margin-right: 8px; }
     .entry-desc { font-size: 11.5px; color: #374151; line-height: 1.5; margin-top: 2px; }
+    .entry-detail {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-top: 1px;
+      padding-left: 10px;
+      border-left: 2px solid var(--border);
+    }
 
     .tech-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
     .tech-tag {
@@ -264,8 +273,10 @@
       flex-direction: column;
       gap: 4px;
     }
-    .project-card:hover { border-color: var(--accent-light); }
+    .project-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 6px; }
     .project-title { font-size: 12px; font-weight: 700; color: var(--text); }
+    .project-date { font-size: 9.5px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
+    .project-role { font-size: 10px; font-weight: 600; color: var(--accent); font-style: italic; }
     .project-cat {
       font-size: 9px;
       font-weight: 600;
@@ -299,7 +310,7 @@
       top: 1px;
     }
 
-    /* Career goal */
+    /* Personal / goal */
     .goal-box {
       background: var(--accent-bg);
       border: 1px solid rgba(124, 58, 237, 0.15);
@@ -309,7 +320,6 @@
       font-size: 11.5px;
       color: #374151;
       line-height: 1.6;
-      font-style: italic;
     }
 
     /* ── Print styles ── */
@@ -354,7 +364,7 @@
       <div>
         <div class="sidebar-avatar">MM</div>
         <div class="sidebar-name">Myat Min Thu</div>
-        <div class="sidebar-title">Information Systems Student<br>Data Science · Flutter Developer</div>
+        <div class="sidebar-title">S.Kom. Candidate · Data Science<br>Mobile & AI Developer</div>
       </div>
 
       <!-- Contact -->
@@ -362,8 +372,18 @@
         <div class="sidebar-section-title">Contact</div>
 
         <div class="contact-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.08 3.4 2 2 0 0 1 3.06 1.24h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          +6282125046553
+        </div>
+
+        <div class="contact-item">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           mgmyomin670@gmail.com
+        </div>
+
+        <div class="contact-item">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <a href="https://myatminthu.vercel.app">myatminthu.vercel.app</a>
         </div>
 
         <div class="contact-item">
@@ -378,7 +398,7 @@
 
         <div class="contact-item">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Cikarang, Indonesia
+          Bekasi, West Java, Indonesia
         </div>
       </div>
 
@@ -388,18 +408,18 @@
         <div>
           <span class="skill-tag">Python</span>
           <span class="skill-tag">Machine Learning</span>
-          <span class="skill-tag">Data Analytics</span>
           <span class="skill-tag">NLP</span>
-          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">Django</span>
           <span class="skill-tag">Flutter</span>
           <span class="skill-tag">Dart</span>
-          <span class="skill-tag">Java</span>
-          <span class="skill-tag">JavaScript</span>
           <span class="skill-tag">React</span>
-          <span class="skill-tag">Django</span>
-          <span class="skill-tag">Firebase</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">SQL</span>
           <span class="skill-tag">PostgreSQL</span>
           <span class="skill-tag">REST API</span>
+          <span class="skill-tag">Data Analytics</span>
         </div>
       </div>
 
@@ -407,10 +427,8 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Certifications</div>
         <ul class="sidebar-list">
-          <li>CS50x — Harvard University</li>
-          <li>SoloLearn Java</li>
-          <li>SoloLearn C++</li>
-          <li>SAP Data Analysis — ASEAN Data Science Explorers</li>
+          <li>CS50 Introduction to Computer Science — Harvard University (David J. Malan)</li>
+          <li>ASEAN Data Science Explorers — SAP &amp; ASEAN Foundation</li>
         </ul>
       </div>
 
@@ -427,8 +445,8 @@
             <span class="lang-level">Intermediate / Professional</span>
           </div>
           <div class="lang-item">
-            <span class="lang-name">Indonesian</span>
-            <span class="lang-level">Currently Learning</span>
+            <span class="lang-name">Japanese</span>
+            <span class="lang-level">Intermediate</span>
           </div>
         </div>
       </div>
@@ -437,7 +455,7 @@
       <div class="sidebar-section">
         <div class="sidebar-section-title">Interests</div>
         <div style="font-size:10.5px;color:rgba(233,228,248,0.7);line-height:1.6;">
-          Artificial Intelligence · Data Science · Machine Learning · NLP & Generative AI · Mobile Development · Web Development
+          Artificial Intelligence · Machine Learning · NLP & Generative AI · Mobile Development · Web Development · Data Science
         </div>
       </div>
 
@@ -449,7 +467,7 @@
       <!-- Header -->
       <div class="main-header">
         <h1>Myat <span>Min Thu</span></h1>
-        <p>Information Systems student at President University specialising in Data Science, with a strong interest in AI, Mobile Development, and modern software technologies. Building projects that combine software and AI to solve real-world problems.</p>
+        <p>Passionate software developer specialising in mobile development and AI/ML, with hands-on experience building Flutter mobile applications and AI-powered systems. Skilled in Python, Django, FastAPI, and Flutter, with a strong foundation in machine learning, data science, and intelligent system design. Committed to building impactful and innovative digital solutions.</p>
       </div>
 
       <!-- Education -->
@@ -459,14 +477,15 @@
         <div class="entry">
           <div class="entry-header">
             <div>
-              <div class="entry-title">Bachelor of Information Systems — Data Science Focus</div>
-              <div class="entry-company">President University · SEAL Scholarship Recipient</div>
+              <div class="entry-title">Candidate for Sarjana Komputer (S.Kom.) — Data Science</div>
+              <div class="entry-company">President University · GPA 3.50 / 4.00</div>
             </div>
             <div class="entry-meta">
-              <span>2024 – Present</span>
+              <span>Jan 2025 – Present</span>
               <span>Indonesia</span>
             </div>
           </div>
+          <div class="entry-desc">SEAL Scholarship Recipient (Jan 2025 – Dec 2027)</div>
           <div class="tech-tags">
             <span class="tech-tag">Data Science</span>
             <span class="tech-tag">Information Systems</span>
@@ -474,44 +493,56 @@
           </div>
         </div>
 
+      </div>
+
+      <!-- Work Experience -->
+      <div class="section">
+        <div class="section-title">Work Experience</div>
+
         <div class="entry">
           <div class="entry-header">
             <div>
-              <div class="entry-title">Fundamental Computing &amp; Programming</div>
-              <div class="entry-company">KBTC College</div>
+              <div class="entry-title">The Language Crew Academy <span style="font-weight:400;font-size:11px;color:var(--text-muted)">· Online (Remote)</span></div>
+              <div class="entry-sub">Co-Founder — Executive Leadership / Founder Team</div>
             </div>
-            <div class="entry-meta">
-              <span>Completed</span>
-              <span>Myanmar</span>
-            </div>
+            <div class="entry-meta"><span>Jun 2026 – Present</span></div>
           </div>
-          <div class="entry-desc">Java, SQL, Data Structures, Web Development foundations.</div>
+          <div class="entry-desc">Co-founded an online English training startup offering structured language courses. Responsible for business development, curriculum planning, and managing operations to deliver accessible and quality English education to learners online.</div>
         </div>
 
         <div class="entry">
           <div class="entry-header">
             <div>
-              <div class="entry-title">Bachelor of Mathematics</div>
-              <div class="entry-company">Mandalar University</div>
+              <div class="entry-title">President University <span style="font-weight:400;font-size:11px;color:var(--text-muted)">· Cikarang, West Java</span></div>
+              <div class="entry-sub">Student Ambassador — Student Ambassador Program</div>
             </div>
-            <div class="entry-meta">
-              <span>Graduated</span>
-              <span>Myanmar</span>
-            </div>
+            <div class="entry-meta"><span>Aug 2025 – Present</span></div>
           </div>
+          <div class="entry-desc">Represented President University by promoting the university to prospective students, supporting campus events, and fostering community engagement. Served as a bridge between the university and the public, demonstrating institutional values and academic excellence.</div>
         </div>
 
         <div class="entry">
           <div class="entry-header">
             <div>
-              <div class="entry-title">CS50x — Introduction to Computer Science</div>
-              <div class="entry-company">Harvard University (Online)</div>
+              <div class="entry-title">Overspace ERP Company <span style="font-weight:400;font-size:11px;color:var(--text-muted)">· Myanmar</span></div>
+              <div class="entry-sub">QA Intern — QA Engineer</div>
             </div>
-            <div class="entry-meta">
-              <span>Completed</span>
-            </div>
+            <div class="entry-meta"><span>Apr 2025 – Jul 2025</span></div>
           </div>
+          <div class="entry-desc">Performed manual testing on ERP system features to identify bugs and ensure functionality. Created and executed test cases, reported issues to the development team, and contributed to improving overall software quality.</div>
         </div>
+
+        <div class="entry">
+          <div class="entry-header">
+            <div>
+              <div class="entry-title">MDY Rescue <span style="font-weight:400;font-size:11px;color:var(--text-muted)">· Mandalay, Myanmar</span></div>
+              <div class="entry-sub">Volunteer — Emergency Response</div>
+            </div>
+            <div class="entry-meta"><span>Feb 2021 – Jul 2021</span></div>
+          </div>
+          <div class="entry-desc">Volunteered during the COVID-19 pandemic to support emergency response and community aid supply distribution.</div>
+        </div>
+
       </div>
 
       <!-- Projects -->
@@ -520,66 +551,79 @@
         <div class="projects-grid">
 
           <div class="project-card">
-            <div class="project-title">Food Delivery App</div>
-            <div class="project-cat">Mobile</div>
-            <div class="project-desc">Full-featured food delivery application with state management and REST API integration.</div>
-            <div class="project-tech">Flutter · Riverpod · REST API</div>
+            <div class="project-card-header">
+              <div class="project-title">FlashPort — AI Customs Declaration</div>
+              <div class="project-date">Jun 2026 – Present</div>
+            </div>
+            <div class="project-role">Project Manager &amp; Team Leader</div>
+            <div class="project-cat">AI / Full-Stack</div>
+            <div class="project-desc">AI-powered customs declaration automation for Cikarang Dry Port (AI Open Innovation Challenge 2026). OCR pipeline, spaCy NER, and XGBoost risk scoring to automate CEISA processing.</div>
+            <div class="project-tech">FastAPI · Flutter · React · PostgreSQL · XGBoost · spaCy</div>
           </div>
 
           <div class="project-card">
-            <div class="project-title">Chatting Application</div>
-            <div class="project-cat">Mobile</div>
-            <div class="project-desc">Real-time messaging app built for seamless user communication.</div>
-            <div class="project-tech">Flutter · Real-time Messaging</div>
+            <div class="project-card-header">
+              <div class="project-title">WasteIQ — AI Waste Volume Prediction</div>
+              <div class="project-date">Jun 2026 – Present</div>
+            </div>
+            <div class="project-role">Project Manager &amp; Team Leader</div>
+            <div class="project-cat">AI / Full-Stack</div>
+            <div class="project-desc">AI-powered waste volume prediction platform for the AI Open Innovation Challenge 2026. Full-stack across Django, React dashboard, and Flutter driver app with 21 API endpoints and ML prediction engine.</div>
+            <div class="project-tech">Django · React · Flutter · PostgreSQL · Machine Learning</div>
           </div>
 
           <div class="project-card">
-            <div class="project-title">Movie &amp; Weather App</div>
-            <div class="project-cat">Mobile</div>
-            <div class="project-desc">Dynamic application integrating multiple REST APIs for movies and weather data.</div>
-            <div class="project-tech">REST API · Dart · Flutter</div>
+            <div class="project-card-header">
+              <div class="project-title">Myanmar New Year Festival Event</div>
+              <div class="project-date">Apr 2026</div>
+            </div>
+            <div class="project-role">Supervisor</div>
+            <div class="project-cat">Event / Leadership</div>
+            <div class="project-desc">Supervised the Myanmar New Year Festival at President University Student Housing. Managed event planning, coordinated volunteers, and oversaw cultural activity execution for dormitory residents.</div>
+            <div class="project-tech">Project Management · Event Operations · Team Leadership</div>
           </div>
 
           <div class="project-card">
-            <div class="project-title">Java POS System</div>
-            <div class="project-cat">Desktop</div>
-            <div class="project-desc">Point-of-Sale system for efficient sales and inventory management.</div>
-            <div class="project-tech">Java</div>
+            <div class="project-card-header">
+              <div class="project-title">Baju Adat Papua</div>
+              <div class="project-date">Jun – Jul 2025</div>
+            </div>
+            <div class="project-role">Assistant Leader</div>
+            <div class="project-cat">Social / Cultural</div>
+            <div class="project-desc">Social project promoting and preserving traditional Papuan clothing culture. Organised events, managed logistics, and presented cultural significance of traditional attire to raise community awareness.</div>
+            <div class="project-tech">Leadership · Coordination · Cultural Education</div>
           </div>
 
           <div class="project-card">
-            <div class="project-title">Inventory Analytics</div>
-            <div class="project-cat">DS &amp; ML</div>
-            <div class="project-desc">Inventory monitoring dashboard with demand analysis, stock prediction, and ML model comparison.</div>
-            <div class="project-tech">Python · ETL · Machine Learning</div>
-          </div>
-
-          <div class="project-card">
-            <div class="project-title">AI &amp; NLP Projects</div>
-            <div class="project-cat">DS &amp; ML</div>
-            <div class="project-desc">Text classification, QA chatbots, RAG systems, OCR, and ML workflows. (In Progress)</div>
-            <div class="project-tech">Python · NLP · RAG · OCR</div>
+            <div class="project-card-header">
+              <div class="project-title">UntuKita Umbrella Website</div>
+              <div class="project-date">Jan – May 2025</div>
+            </div>
+            <div class="project-role">Web Developer</div>
+            <div class="project-cat">Website</div>
+            <div class="project-desc">Built a user-friendly website for a small umbrella business to showcase products, manage inventory, and handle customer orders. Implemented responsive frontend and basic e-commerce functions.</div>
+            <div class="project-tech">Frontend Development · UI/UX · E-Commerce</div>
           </div>
 
         </div>
       </div>
 
-      <!-- Leadership -->
+      <!-- Leadership & Activities -->
       <div class="section">
-        <div class="section-title">Leadership &amp; Involvement</div>
+        <div class="section-title">Leadership &amp; Activities</div>
         <div class="leadership-list">
           <div class="leadership-item">Vice Chairperson (2026) — President University Myanmar Students Association</div>
-          <div class="leadership-item">Vice Chairperson (2026) — President University Major Association</div>
-          <div class="leadership-item">Student Ambassador — President University</div>
-          <div class="leadership-item">Volunteer — COVID-19 community awareness activities, Myanmar</div>
+          <div class="leadership-item">Vice Chairperson (2026) — President University Major Association of Information System</div>
+          <div class="leadership-item">Student Ambassador — President University (Aug 2025 – Present)</div>
+          <div class="leadership-item">Co-Founder — The Language Crew Academy (Jun 2026 – Present)</div>
         </div>
       </div>
 
-      <!-- Career Goal -->
+      <!-- Personal -->
       <div class="section">
-        <div class="section-title">Career Goal</div>
+        <div class="section-title">Personal</div>
         <div class="goal-box">
-          To become a Data Scientist and Software Developer who combines AI, analytics, and software technologies to build innovative and impactful solutions.
+          Passionate software developer specialising in mobile development and AI/ML, with hands-on experience building Flutter mobile applications and AI-powered systems. Skilled in Python, Django, FastAPI, and Flutter, with a strong foundation in machine learning, data science, and intelligent system design. Committed to building impactful and innovative digital solutions.
         </div>
       </div>
 

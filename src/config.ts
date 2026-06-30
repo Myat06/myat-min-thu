@@ -12,6 +12,7 @@ export const config = {
         location: "Indonesia"
     },
     cv: "/cv/myat-min-thu-cv.html",
+    resume: "/cv/myat-min-thu-resume.pdf",
     about: {
         title: "About Me",
         description: "I am an Information Systems student at President University with a focus on Data Science and a strong interest in Artificial Intelligence, Mobile Development, and modern software technologies. Originally from Myanmar, I started my journey in software development through mobile applications using Flutter and later expanded into Data Science, Machine Learning, and AI-related technologies. I enjoy building projects that solve real-world problems and continuously learning new technologies. My goal is to combine software development and AI to create meaningful and innovative solutions."
@@ -55,6 +56,33 @@ export const config = {
         }
     ],
     projects: [
+        {
+            id: 17,
+            title: "FlashPort — AI Customs Declaration",
+            category: "DS & ML",
+            technologies: "FastAPI, Flutter, React, PostgreSQL, Tesseract OCR, XGBoost, spaCy, Docker",
+            image: "",
+            description: "AI-powered customs declaration automation platform built for the AI Open Innovation Challenge 2026 (Cikarang Dry Port). Features a 3-stage OCR extraction pipeline (spaCy NER, keyword proximity, regex), XGBoost risk scorer trained on 6,000 samples with 93.7% accuracy, dynamic field architecture driven by a database schema, and a live admin dashboard.",
+            github: "https://github.com/Myat06/"
+        },
+        {
+            id: 18,
+            title: "WasteIQ — AI Waste Volume Prediction",
+            category: "DS & ML",
+            technologies: "Django, React, Flutter, PostgreSQL, Machine Learning, Open-Meteo API, GPS",
+            image: "",
+            description: "AI-powered waste volume prediction platform for the AI Open Innovation Challenge 2026. Includes an ML-based prediction engine, real-time GPS truck tracking with route optimisation, weather data integration via Open-Meteo, a React dashboard with 10 pages, and a Flutter driver mobile app. Full-stack with 21 REST API endpoints and seed data for 30 zones.",
+            github: "https://github.com/Myat06/"
+        },
+        {
+            id: 19,
+            title: "MMK–IDR Money Exchange",
+            category: "Website",
+            technologies: "Next.js, TypeScript, Supabase, Tailwind CSS",
+            image: "",
+            description: "Real-time Myanmar Kyat (MMK) to Indonesian Rupiah (IDR) exchange rate web app built with Next.js and Supabase. Features live rate display with spread calculation, a currency converter, admin panel for rate management, exchange history tracking, and a contact page.",
+            github: "https://github.com/Myat06/"
+        },
         {
             id: 1,
             title: "Food Delivery App",

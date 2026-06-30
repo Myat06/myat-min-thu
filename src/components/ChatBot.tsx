@@ -1,86 +1,136 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Loader } from "lucide-react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { X, Send } from "lucide-react";
+import { config } from "../config";
 import "./styles/ChatBot.css";
 
 type Message = { role: "user" | "assistant"; content: string };
 
-const SYSTEM_PROMPT = `
-You are a personal AI assistant embedded in Myat Min Thu's portfolio website. Your ONLY job is to answer questions about Myat Min Thu.
+// ── Build projects table from config ─────────────────────────────────────────
+const CATEGORY_ICONS: Record<string, string> = {
+  "DS & ML": "🤖",
+  "Mobile":  "📱",
+  "Website": "🌐",
+  "Event":   "🎉",
+};
 
-STRICT RULE: Only respond to questions directly about Myat Min Thu — his education, skills, experience, projects, goals, or background. If someone asks about anything else, politely reply: "I'm only here to talk about Myat Min Thu! Feel free to ask about his skills, projects, or background."
+function buildProjectsResponse(): string {
+  const grouped: Record<string, typeof config.projects> = {};
+  for (const p of config.projects) {
+    if (!grouped[p.category]) grouped[p.category] = [];
+    grouped[p.category].push(p);
+  }
 
-Keep answers friendly, concise, and accurate based on the profile below.
+  const total = config.projects.length;
+  let out = `📋 All Projects (${total} total)\n`;
 
---- PROFILE ---
+  for (const [cat, projects] of Object.entries(grouped)) {
+    const icon = CATEGORY_ICONS[cat] ?? "📁";
+    out += `\n${icon} ${cat} (${projects.length})\n`;
+    out += `${"─".repeat(32)}\n`;
+    for (const p of projects) {
+      out += `▸ ${p.title}\n`;
+      out += `  ${p.technologies}\n`;
+    }
+  }
 
-Name: Myat Min Thu
-Title: Information Systems Student | Data Science | Flutter Developer
-Location: Indonesia (originally from Myanmar)
-Email: mgmyomin670@gmail.com
-GitHub: https://github.com/Myat06
-LinkedIn: https://www.linkedin.com/in/myat-min-thu-006a09295
+  out += `\nAsk me about any specific project for more details!`;
+  return out;
+}
 
-ABOUT:
-Information Systems student at President University with a focus on Data Science and a strong interest in Artificial Intelligence, Mobile Development, and modern software technologies. Originally from Myanmar, started in software development through mobile apps with Flutter, then expanded into Data Science, Machine Learning, and AI.
+// ── Rule-based response engine ───────────────────────────────────────────────
+const rules: { keywords: string[]; response: string }[] = [
+  {
+    keywords: ["hello", "hi", "hey", "greet", "sup", "halo"],
+    response: "Hey there! 👋 I'm here to tell you all about Myat Min Thu. You can ask me about his skills, projects, education, work experience, or how to contact him!",
+  },
+  {
+    keywords: ["who", "about", "introduce", "yourself", "tell me about", "myat"],
+    response: "Myat Min Thu is a software developer from Myanmar, currently studying Sarjana Komputer (S.Kom.) with a Data Science focus at President University, Indonesia (GPA 3.50/4.00, SEAL Scholar). He specialises in Flutter mobile apps and AI/ML systems, and loves building things that solve real problems.",
+  },
+  {
+    keywords: ["skill", "tech", "stack", "language", "know", "use", "capable", "proficient"],
+    response: "Here's Myat's tech stack:\n\n• AI/ML — Python, Machine Learning, NLP, XGBoost, spaCy, OCR\n• Mobile — Flutter, Dart, Riverpod\n• Backend — FastAPI, Django, Laravel\n• Frontend — React.js, Next.js, JavaScript\n• Databases — PostgreSQL, MySQL, Firebase, Supabase\n• Other — REST API, Java, Git, Docker",
+  },
+  {
+    keywords: ["project", "work", "built", "made", "portfolio", "app", "system", "all project", "show project", "list project"],
+    response: buildProjectsResponse(),
+  },
+  {
+    keywords: ["flashport", "customs", "ceisa", "declaration"],
+    response: "FlashPort is an AI-powered customs declaration automation system built for Cikarang Dry Port, developed for the AI Open Innovation Challenge 2026. Myat led the team as Project Manager. It uses a 3-stage OCR pipeline (spaCy NER, keyword proximity, regex), XGBoost risk scoring trained on 6,000 samples with 93.7% accuracy, FastAPI backend, Flutter mobile app, and React admin dashboard.",
+  },
+  {
+    keywords: ["wasteiq", "waste", "prediction", "garbage"],
+    response: "WasteIQ is an AI-powered waste volume prediction platform for the AI Open Innovation Challenge 2026. Myat led the AI See You Team. It features a Django REST API with 21 endpoints, ML prediction engine, real-time GPS truck tracking, weather data integration (Open-Meteo), a React dashboard with 10 pages, and a Flutter driver mobile app.",
+  },
+  {
+    keywords: ["money", "exchange", "mmk", "idr", "currency"],
+    response: "The MMK–IDR Money Exchange app is a real-time Myanmar Kyat to Indonesian Rupiah exchange rate web app built with Next.js and Supabase. It features live rate display with spread calculation, a currency converter, admin panel for rate management, and exchange history tracking.",
+  },
+  {
+    keywords: ["education", "study", "university", "degree", "gpa", "school", "college"],
+    response: "Myat's education:\n\n🎓 Sarjana Komputer (S.Kom.), Data Science Focus — President University, Indonesia (Jan 2025–Present) | GPA 3.50/4.00 | SEAL Scholarship Recipient (2025–2027)\n\nPreviously studied Mathematics at Mandalar University (Myanmar) and completed CS50x at Harvard University.",
+  },
+  {
+    keywords: ["experience", "job", "intern", "work experience", "company", "career", "employed"],
+    response: "Myat's work experience:\n\n🚀 Co-Founder — The Language Crew Academy (Jun 2026–Present) | Online English training startup\n🎓 Student Ambassador — President University (Aug 2025–Present)\n🔍 QA Intern — Overspace ERP Company, Myanmar (Apr–Jul 2025) | Manual testing, test cases\n❤️ Volunteer — MDY Rescue, Myanmar (Feb–Jul 2021) | COVID-19 emergency response",
+  },
+  {
+    keywords: ["contact", "email", "reach", "hire", "message", "whatsapp", "linkedin", "github"],
+    response: "You can reach Myat Min Thu here:\n\n📧 Email — mgmyomin670@gmail.com\n💼 LinkedIn — linkedin.com/in/myat-min-thu-006a09295\n🐙 GitHub — github.com/Myat06\n🌐 Portfolio — myatminthu.vercel.app",
+  },
+  {
+    keywords: ["flutter", "mobile", "dart", "app"],
+    response: "Flutter is one of Myat's core strengths. He has built multiple mobile apps including a food delivery app, real-time chat application, shop & delivery app (with AI chatbot + voice recognition), and even a Flappy Bird game using the Flame engine. He uses Riverpod and Provider for state management.",
+  },
+  {
+    keywords: ["python", "machine learning", "ml", "ai", "data science", "nlp"],
+    response: "Myat works with Python for AI/ML tasks — including machine learning model training (XGBoost, scikit-learn), NLP (spaCy, text classification, RAG systems), OCR (Tesseract), and data analytics. His FlashPort project achieved 93.7% accuracy with XGBoost risk scoring.",
+  },
+  {
+    keywords: ["leadership", "association", "club", "role", "position", "vice"],
+    response: "Myat's leadership roles:\n\n• Vice Chairperson (2026) — President University Myanmar Students Association\n• Vice Chairperson (2026) — President University Major Association of Information System\n• Student Ambassador — President University\n• Co-Founder — The Language Crew Academy\n• Volunteer — MDY Rescue (COVID-19 emergency response)",
+  },
+  {
+    keywords: ["certificate", "certification", "award", "achievement", "cs50", "harvard", "sap"],
+    response: "Myat's certifications:\n\n🏆 CS50 Introduction to Computer Science — Harvard University (David J. Malan)\n📊 ASEAN Data Science Explorers — SAP & ASEAN Foundation",
+  },
+  {
+    keywords: ["goal", "future", "plan", "dream", "aspire", "want to"],
+    response: "Myat's career goal is to become a Data Scientist and Software Developer who combines AI, analytics, and software technologies to build innovative and impactful solutions — bridging mobile development and intelligent systems.",
+  },
+  {
+    keywords: ["location", "where", "country", "live", "from", "myanmar", "indonesia", "bekasi"],
+    response: "Myat Min Thu is originally from Myanmar and is currently based in Bekasi, West Java, Indonesia — where he studies at President University.",
+  },
+  {
+    keywords: ["scholarship", "seal", "president university", "gpa"],
+    response: "Myat is a SEAL Scholarship recipient at President University (Jan 2025–Dec 2027), studying Sarjana Komputer with a Data Science focus. His current GPA is 3.50/4.00.",
+  },
+  {
+    keywords: ["language", "speak", "burmese", "english", "japanese", "indonesian"],
+    response: "Myat speaks:\n\n🇲🇲 Burmese (Myanmar) — Native\n🇬🇧 English — Intermediate / Professional\n🇯🇵 Japanese — Intermediate",
+  },
+];
 
-EDUCATION:
-- Bachelor of Information Systems (Data Science Focus) — President University, Indonesia (2024–Present). SEAL Scholarship Recipient.
-- Fundamental Computing & Programming — KBTC College, Myanmar (Completed). Java, SQL, Data Structures, Web Development.
-- Bachelor of Mathematics — Mandalar University, Myanmar (Graduated).
-- CS50x: Introduction to Computer Science — Harvard University, Online (Completed).
+const FALLBACK = "I'm not sure about that one! You can ask me about Myat's skills, projects, work experience, education, certifications, or how to contact him. 😊";
 
-TECHNICAL SKILLS:
-- Data Science & AI: Python, Machine Learning, Data Analytics, NLP, Data Visualization, SQL, Model Evaluation, Feature Engineering
-- Mobile: Flutter, Dart, Riverpod, Provider
-- Web & Backend: React.js, Next.js, Django, Laravel, JavaScript, PHP
-- Databases: Firebase, Supabase, PostgreSQL, MySQL
-- Other: REST API, Java, Git
-
-PROJECTS:
-1. Food Delivery App (Mobile) — Flutter, Provider, REST API
-2. Chatting Application (Mobile) — Real-time messaging, Flutter
-3. Movie & Weather App (Mobile) — REST API integration
-4. Java POS System (Desktop) — Inventory & sales management, Java
-5. AI Tic-Tac-Toe Game (DS & ML) — Python, AI logic
-6. Inventory Analytics (DS & ML) — ETL dashboard, stock prediction, ML model comparison
-7. AI & NLP Projects (DS & ML, In Progress) — Text classification, RAG systems, OCR, ML workflows
-8. Myanmar New Year Festival (Event) — Led planning, cultural performances, and operations
-9. Myanmar Students Orientation Day (Event) — Managed orientation as project manager
-10. DVD Rental AI Dashboard (DS & ML) — Django, React, PostgreSQL, ML forecasting, Ollama/Claude API
-11. DVD Rental Analytics (DS & ML) — Machine Learning, Django, PostgreSQL
-12. Shop & Delivery Application (Mobile) — Flutter, Google Maps, AI Chatbot, Voice Recognition
-13. School Management System (Website) — PHP, Laravel, MySQL
-14. Untukita Umbrella Website (Website) — Responsive frontend website
-15. Flappy Bird (Mobile) — Flutter, Flame Engine game
-16. Event Instrumental 2025 (Event) — Led as Vice Chairperson of the President University Major Association (PUMA)
-
-CERTIFICATIONS:
-- CS50x — Harvard University
-- SoloLearn Java & C++
-- SAP Data Analysis — ASEAN Data Science Explorers
-
-LEADERSHIP:
-- Vice Chairperson (2026) — President University Myanmar Students Association
-- Vice Chairperson (2026) — President University Major Association
-- Student Ambassador — President University
-- Volunteer — COVID-19 community awareness, Myanmar
-
-LANGUAGES: Burmese (Native), English (Intermediate/Professional), Indonesian (Learning)
-
-CAREER GOAL: To become a Data Scientist and Software Developer combining AI, analytics, and software to build innovative and impactful solutions.
-
-INTERESTS: Artificial Intelligence, Data Science, Machine Learning, NLP & Generative AI, Mobile Development, Web Development
-`.trim();
+function getRuleBasedReply(input: string): string {
+  const q = input.toLowerCase();
+  for (const rule of rules) {
+    if (rule.keywords.some((kw) => q.includes(kw))) {
+      return rule.response;
+    }
+  }
+  return FALLBACK;
+}
 
 const WELCOME: Message = {
   role: "assistant",
   content:
-    "Hi! I'm Myat Min Thu's AI assistant. Ask me anything about him — his skills, projects, education, or background! 👋",
+    "Hi! I'm Myat Min Thu's assistant. Ask me anything about him — his skills, projects, education, or how to contact him! 👋",
 };
-
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY ?? "");
 
 /* ── Animated color orb ─────────────────────────────────────── */
 const ColorOrb = () => (
@@ -92,13 +142,12 @@ const ChatBot = () => {
   const [isOpen,   setIsOpen]   = useState(false);
   const [messages, setMessages] = useState<Message[]>([WELCOME]);
   const [input,    setInput]    = useState("");
-  const [loading,  setLoading]  = useState(false);
   const bottomRef               = useRef<HTMLDivElement>(null);
   const wrapperRef              = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
+  }, [messages]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -110,40 +159,14 @@ const ChatBot = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const send = async () => {
+  const send = () => {
     const text = input.trim();
-    if (!text || loading) return;
+    if (!text) return;
 
     const updated: Message[] = [...messages, { role: "user", content: text }];
-    setMessages(updated);
+    const reply = getRuleBasedReply(text);
+    setMessages([...updated, { role: "assistant", content: reply }]);
     setInput("");
-    setLoading(true);
-
-    try {
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash-lite",
-        systemInstruction: SYSTEM_PROMPT,
-      });
-
-      // Build history — Gemini requires history to start with a "user" turn
-      const allHistory = updated.slice(0, -1).map((m) => ({
-        role: m.role === "assistant" ? "model" : "user",
-        parts: [{ text: m.content }],
-      }));
-      const firstUserIdx = allHistory.findIndex((m) => m.role === "user");
-      const history = firstUserIdx === -1 ? [] : allHistory.slice(firstUserIdx);
-
-      const chat = model.startChat({ history });
-      const result = await chat.sendMessage(text);
-      const reply = result.response.text();
-
-      setMessages([...updated, { role: "assistant", content: reply }]);
-    } catch (err) {
-      console.error("Gemini error:", err);
-      setMessages([...updated, { role: "assistant", content: "Something went wrong. Please try again." }]);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -182,11 +205,6 @@ const ChatBot = () => {
                   {m.content}
                 </div>
               ))}
-              {loading && (
-                <div className="chatbot-msg chatbot-msg--assistant chatbot-typing">
-                  <Loader size={13} className="chatbot-spin" /> Thinking…
-                </div>
-              )}
               <div ref={bottomRef} />
             </div>
 
@@ -200,7 +218,7 @@ const ChatBot = () => {
                 onKeyDown={onKey}
                 rows={1}
               />
-              <button className="chatbot-send" onClick={send} disabled={!input.trim() || loading} aria-label="Send">
+              <button className="chatbot-send" onClick={send} disabled={!input.trim()} aria-label="Send">
                 <Send size={14} />
               </button>
             </div>
